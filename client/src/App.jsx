@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import viteLogo from '/vite.svg'
+import Header from "./components/header/Header";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-     <h1>Hello world</h1>
-    </>
-  )
+    return (
+        <div id="box">
+            <Header />
+        </div>
+    );
 }
 
-export default App
+export default App;
