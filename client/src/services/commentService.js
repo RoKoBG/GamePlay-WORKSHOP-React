@@ -6,7 +6,10 @@ export const create = async (gameId, username, text) => {
     const newComment = await request.post(baseUrl, { gameId, username, text });
     return newComment;
 };
-export const getAll = async () => {
-    const result = await request.get(baseUrl);
+export const getAll = async (gameId) => {
+    const query = new URLSearchParams({
+        where: `gameId="${gameId}"`,
+    })
+    const result = await request.get(`${baseUrl}?${query}`);
     return Object.values(result);
 };
