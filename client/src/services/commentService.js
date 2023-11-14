@@ -6,3 +6,7 @@ export const create = async (gameId, username, text) => {
     const newComment = await request.post(baseUrl, { gameId, username, text });
     return newComment;
 };
+export const getAll = async () => {
+    const result = await request.get(baseUrl);
+    return Object.values(result);
+};

@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import * as gameService from "../../services/gameService";
 import * as commentService from "../../services/commentService";
 export default function GameDetails() {
-    const { gameId } = useParams();
     const [game, setGame] = useState({});
+    const [comments, setComments] = useState([]);
+    const { gameId } = useParams();
+
     useEffect(() => {
         gameService.getOne(gameId).then(setGame);
+        commentService.getAll().then(setComments);
     }, [gameId]);
 
     const addCommentHandler = async (e) => {
@@ -18,7 +21,7 @@ export default function GameDetails() {
             formData.get("username"),
             formData.get("comment")
         );
-        console.log(newComment);
+        
     };
 
     return (
@@ -33,21 +36,21 @@ export default function GameDetails() {
                 </div>
 
                 <p className="text">{game.summary}</p>
-
-                {/* <!-- Bonus ( for Guests and Users ) --> */}
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
-                        {/* <!-- list all comments for current game (If any) --> */}
-                        <li className="comment">
-                            <p>Content: I rate this one quite highly.</p>
-                        </li>
-                        <li className="comment">
-                            <p>Content: The best game.</p>
-                        </li>
+                        {comments.map(({ username, text }) => (
+                            <li className="comment">
+                                <p>
+                                    {username}: {text}
+                                </p>
+                            </li>
+                        ))}
                     </ul>
+                    {comments.length == 0 && (
+                        <p className="no-comment">No comments.</p>
+                    )}
                     {/* <!-- Display paragraph: If there are no games in the database -->  */}
-                    <p className="no-comment">No comments.</p>
                 </div>
 
                 {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
