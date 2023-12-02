@@ -22,7 +22,12 @@ function App() {
     setAuth(result);
     navigate(Path.Home);
   };
-
+const values = {
+  loginSubmitHandler,
+  username:  auth.username,
+  email: auth.email,
+  isAuthenticated: !!auth.username,
+}
   return (
     <AuthContext.Provider value={{ loginSubmitHandler }}>
       <div id="box">
